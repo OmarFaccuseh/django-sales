@@ -1,0 +1,8 @@
+/backup db file
+/inventario/backup migrations file
+/inventario/backup pycache file
+/inventario/example_orders_ml.json
+.env
+db.slite3
+db.sqlite3
+example_resp_items.json
