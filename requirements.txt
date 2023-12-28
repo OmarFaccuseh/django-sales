@@ -26,7 +26,7 @@ packaging==23.1
 pandas==2.0.1
 pathlib==1.0.1
 prov==2.0.0
-psycopg2==2.9.9
+psycopg2-binary==2.9.8
 pydot==1.4.2
 PyMuPDF==1.23.8
 PyMuPDFb==1.23.7
