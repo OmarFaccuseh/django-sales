@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 # others imports inner ready function
 
-@staticmethod
+#@staticmethod
 def getOrders():
     import requests
     import json
