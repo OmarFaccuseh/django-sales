@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "build",
   "builds": [
     {
       "src": "sales/wsgi.py",
@@ -24,4 +25,5 @@
       "dest": "sales/wsgi.py"
     }
   ]
+
 }
