@@ -3,6 +3,8 @@ from django.apps import AppConfig
 
 #@staticmethod
 def getOrders():
+    return "NOT ABLE"
+    """
     import requests
     import json
     from .models import Order, Tokens
@@ -59,6 +61,7 @@ def getOrders():
             new_order_obj = Order.objects.create(**data)
             new_order_obj.save()
     return "OK"
+    """
 
 
 class InventarioConfig(AppConfig):
