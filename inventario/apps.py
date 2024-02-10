@@ -66,6 +66,7 @@ class InventarioConfig(AppConfig):
     verbose_name = "Aplicacion inventario y administracion de ventas"
 
     # FIXME: if new ddbb, should comment this function, because would not have make querys here
+    """
     def ready(self):
         import requests
         from .models import Tokens
@@ -108,4 +109,4 @@ class InventarioConfig(AppConfig):
                 print(e)
 
         getOrders()
-
+    """
