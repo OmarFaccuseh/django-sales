@@ -3,8 +3,7 @@ from django.apps import AppConfig
 
 #@staticmethod
 def getOrders():
-    return "NOT ABLE"
-    '''
+    
     import requests
     import json
     from .models import Order, Tokens
@@ -61,7 +60,6 @@ def getOrders():
             new_order_obj = Order.objects.create(**data)
             new_order_obj.save()
     return "OK"
-    '''
 
 
 class InventarioConfig(AppConfig):
@@ -71,8 +69,6 @@ class InventarioConfig(AppConfig):
     # FIXME: if new ddbb, should comment this function, because would not have make querys here
     
     def ready(self):
-        pass
-        '''
         import requests
         from .models import Tokens
         from datetime import datetime, timezone, timedelta
@@ -114,5 +110,5 @@ class InventarioConfig(AppConfig):
                 print(e)
 
         getOrders()
-        '''
+        
     
