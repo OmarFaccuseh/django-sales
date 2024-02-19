@@ -1,16 +1,61 @@
 from django.apps import AppConfig
-# others imports inner ready function
 
-#@staticmethod
+
+# FIXME: if new ddbb, should comment this function, because would not have make querys here
+def checkToken():
+    import requests
+    from .models import Tokens
+    from datetime import datetime, timezone, timedelta
+
+    if not Tokens.objects.all():
+        print('NOT TOKEN')
+        Tokens.objects.create(token="APP_USR-715970904874422-122216-37d33ac5c704c3e19c59c6749d0533d7-117331702",
+                              refresh_token="TG-6585f1c3e19b430001635f57-117331702")
+
+    tokens_obj = Tokens.objects.get(id=1)
+    # tokens_obj.token = "APP_USR-715970904874422-122216-37d33ac5c704c3e19c59c6749d0533d7-117331702"
+    # .refresh_token = "TG-6585f1c3e19b430001635f57-117331702"
+    # tokens_obj.save()
+    refresh_token = tokens_obj.refresh_token
+
+    now = datetime.now(timezone.utc)
+    diference = now - tokens_obj.last_update
+    time_to_refresh = timedelta(days=0, hours=6, minutes=0)
+
+    if diference > time_to_refresh:
+        try:
+            url = "https://api.mercadolibre.com/oauth/token"
+            payload = 'grant_type=refresh_token&client_id=715970904874422&client_secret=SakB6qmXU9r5ONukgos7RYHhNwSaNVsX&refresh_token=' + refresh_token
+            headers = {
+                'accept': 'application/json',
+                'content-type': 'application/x-www-form-urlencoded'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            print("** RESPONSE ON TRY REFRESH TOKEN: ")
+            print(response.text)
+            if response:
+                print("NEW TOKEN RESPONSE: ")
+                print(response.json())
+                tokens_obj.token = response.json()['access_token']
+                tokens_obj.refresh_token = response.json()['refresh_token']
+                tokens_obj.save()
+        except Exception as e:
+            print("ERROR al intentar resfrescar token API Mercadolibre: ")
+            print(e)
+
+
 def getOrders():
     import requests
     import json
     from .models import Order, Tokens
     from datetime import datetime
+
+    checkToken()  # Critical HEAVY-TON
+
     token_obj = Tokens.objects.get(id=1)
     token = token_obj.token
 
-    # Build and Make ITEMS request
+    # Build and Make ORDERS request
     url = "https://api.mercadolibre.com/orders/search?seller=117331702&sort=date_desc"
     payload = {}
     headers = {'Authorization': 'Bearer ' + token}
@@ -65,47 +110,8 @@ class InventarioConfig(AppConfig):
     name = 'inventario'
     verbose_name = "Aplicacion inventario y administracion de ventas"
 
-    # FIXME: if new ddbb, should comment this function, because would not have make querys here
     def ready(self):
-        import requests
-        from .models import Tokens
-        from datetime import datetime, timezone, timedelta
-
-        if not Tokens.objects.all():
-            print('NOT TOKEN')
-            Tokens.objects.create(token="APP_USR-715970904874422-122216-37d33ac5c704c3e19c59c6749d0533d7-117331702",
-                                  refresh_token="TG-6585f1c3e19b430001635f57-117331702")
-
-        tokens_obj = Tokens.objects.get(id=1)
-        # tokens_obj.token = "APP_USR-715970904874422-122216-37d33ac5c704c3e19c59c6749d0533d7-117331702"
-        # .refresh_token = "TG-6585f1c3e19b430001635f57-117331702"
-        # tokens_obj.save()
-        refresh_token = tokens_obj.refresh_token
-
-        now = datetime.now(timezone.utc)
-        diference = now - tokens_obj.last_update
-        time_to_refresh = timedelta(days=0, hours=6, minutes=0)
-
-        if diference > time_to_refresh:
-            try:
-                url = "https://api.mercadolibre.com/oauth/token"
-                payload = 'grant_type=refresh_token&client_id=715970904874422&client_secret=SakB6qmXU9r5ONukgos7RYHhNwSaNVsX&refresh_token='+refresh_token
-                headers = {
-                    'accept': 'application/json',
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-                response = requests.request("POST", url, headers=headers, data=payload)
-                print("** RESPONSE ON TRY REFRESH TOKEN: ")
-                print(response.text)
-                if response:
-                    print("NEW TOKEN RESPONSE: ")
-                    print(response.json())
-                    tokens_obj.token = response.json()['access_token']
-                    tokens_obj.refresh_token = response.json()['refresh_token']
-                    tokens_obj.save()
-            except Exception as e:
-                print("ERROR al intentar resfrescar token API Mercadolibre: ")
-                print(e)
-
         getOrders()
+
+
 
