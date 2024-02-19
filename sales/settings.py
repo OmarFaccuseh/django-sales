@@ -20,9 +20,9 @@ dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
-DATABASE_URL= os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL')
 
-SECRET_Kgit aEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
