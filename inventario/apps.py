@@ -45,6 +45,7 @@ def checkToken():
 
 
 def getOrders():
+    
     import requests
     import json
     from .models import Order, Tokens
@@ -112,6 +113,4 @@ class InventarioConfig(AppConfig):
 
     def ready(self):
         getOrders()
-
-
 
