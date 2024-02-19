@@ -38,6 +38,7 @@ def checkToken():
                 print(response.json())
                 tokens_obj.token = response.json()['access_token']
                 tokens_obj.refresh_token = response.json()['refresh_token']
+                tokens_obj.last_update = datetime.now(timezone.utc)
                 tokens_obj.save()
         except Exception as e:
             print("ERROR al intentar resfrescar token API Mercadolibre: ")
