@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'inventario.apps.InventarioConfig'
+    'inventario.apps.InventarioConfig',
+    'ordenes.apps.OrdenesConfig',
 ]
 
 MIDDLEWARE = [

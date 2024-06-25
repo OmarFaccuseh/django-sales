@@ -2,19 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{% block title %}{% endblock %}</title>
-<link href="{% static "css/inventario.css" %}" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static "css/inventario.css" %}" rel="stylesheet">
 </head>
 
 <body>
     <div id="content">
-    {% block content %}
-    {% endblock %}
-</div>
+        {% block content %}
+        {% endblock %}
+    </div>
 
-<div id="sidebar">
-    <h2>Inventario</h2>
-    <p>Control de inventario</p>
-</div>
+    <div id="sidebar">
+        <h2>Inventario</h2>
+        <p>Control de inventario</p>
+    </div>
 </body>
 </html>

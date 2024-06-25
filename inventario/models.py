@@ -1,15 +1,7 @@
 from django.db import models
-
 from django.urls import reverse
 from datetime import datetime, timezone
 from model_utils import Choices
-
-# Deberia conectar con la api de mercadolibre los productos publicados.
-# y si hay alguna manera recibir nuevos productos publicados para
-# actualizar la base de datos aqui en django.
-
-# No se si deba lograr conectar mediante un boton en la pantalla de admin.
-# o inlcuso con un boton en el frontend.
 
 
 class Categoria(models.Model):
@@ -18,7 +10,7 @@ class Categoria(models.Model):
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=250)
-    slug = models.SlugField(max_length= 250)
+    slug = models.SlugField(max_length=250)
     descripcion = models.CharField(max_length=250)
     sku = models.CharField(max_length=250, default='0')
     costo = models.FloatField()
@@ -63,34 +55,6 @@ class Linea(models.Model):
     @property
     def total(self):
         return self.cantidad * self.producto.precio
-
-
-# almacena el token y el reresh token
-class Tokens(models.Model):
-    token = models.CharField(max_length=250)
-    refresh_token = models.CharField(max_length=250)
-    is_update = models.BooleanField(default=False)
-    last_update = models.DateTimeField(default=datetime.now(timezone.utc))
-
-
-class Order(models.Model):
-    STATUSES = Choices(
-        (1, 'procesando'),
-        (2, 'entregado'),
-        (3, 'cancelado'),
-    )
-    # FIXME PRODUCT ID DEBE SER UN MANY2MANY DE PRODUCTO.
-    order_id = models.CharField(max_length=250, default='NA')
-    product = models.CharField(max_length=250, default=None, null=True)
-    customer = models.CharField(max_length=250, default='dona nona')  # TODO : porque no funciono este default, review with breakpoint
-    unit_price = models.FloatField(default=0.0)
-    qty = models.IntegerField(default=0)
-    subtotal = models.FloatField(default=0.0)
-    total = models.FloatField(default=0.0)
-    # TODO order by date
-    date = models.CharField(max_length=250, default='NA')
-    status = models.CharField(max_length=250, default='NA')
-    notas = models.CharField(max_length=250, default='NA', db_index=True,)
 
 
 
