@@ -11,8 +11,8 @@ import json
 
 
 @csrf_exempt
-def orders(request):   # actualmente en uso
-    # Get updated order
+def orders(request):
+    # Get updated orders
     status_update = getOrders()
     orders = Order.objects.all().order_by('-date')[:99]
     qs_json = serializers.serialize('json', orders)
