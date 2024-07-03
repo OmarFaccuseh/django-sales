@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 
 
-# TODO: on empty ddbb, should comment this function, because would not have excec querys here
 def checkToken():
     import requests
     from .models import Tokens
@@ -13,9 +12,9 @@ def checkToken():
                               refresh_token="TG-6585f1c3e19b430001635f57-117331702")
 
     tokens_obj = Tokens.objects.get(id=1)
-    # tokens_obj.token = "APP_USR-715970904874422-122216-37d33ac5c704c3e19c59c6749d0533d7-117331702"
-    # .refresh_token = "TG-6585f1c3e19b430001635f57-117331702"
-    # tokens_obj.save()
+    tokens_obj.token = "APP_USR-715970904874422-062321-3412483c129e4b5ec813ff5daea6c9f2-117331702"
+    tokens_obj.refresh_token = "TG-6678cc96b7b70200010e7976-117331702"
+    tokens_obj.save()
     refresh_token = tokens_obj.refresh_token
 
     now = datetime.now(timezone.utc)
@@ -107,11 +106,13 @@ def getOrders():
     return "OK"
 
 
+# TODO: on empty ddbb, should comment this function, because would not have excec querys here
 class OrdenesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'ordenes'
     verbose_name = "Aplicacion para consumir api de ordenes de venta en Meli"
 
     def ready(self):
-        getOrders()
+        pass
+        #getOrders()
 

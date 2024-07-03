@@ -6,7 +6,7 @@ from .models import Producto, Linea, Nota
 from rest_framework import viewsets
 from .serializers import ProductoSerializer, LineaSerializer, NotaSerializer
 from django.core import serializers
-from .apps import getOrders
+#  from .apps import getOrders
 import json
 
 
