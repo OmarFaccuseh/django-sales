@@ -86,8 +86,8 @@ DATABASES = {
 }
 
 # ADD only for POSTGREST in RENDER
-# database_url = os.getenv('DATABASE_URL')
-# DATABASES['default'] = dj_database_url.parse(database_url)
+database_url = os.getenv('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 
 # Password validation
