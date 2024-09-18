@@ -18,7 +18,7 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1', 'web-production-03ae.up.railway.app', 'aws-0-us-west-1.pooler.supabase.com', 'django-sales.onrender.com']
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'inventario.apps.InventarioConfig',
     'ordenes.apps.OrdenesConfig',
+    'board.apps.BoardConfig',
+    'django.contrib.humanize',
+
 ]
 
 MIDDLEWARE = [
@@ -74,6 +77,8 @@ WSGI_APPLICATION = 'sales.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# IMPORTANT : Render usar variable PORT para cambiar us puerto de Gunicor, usar url para conectarese a bbdd
+
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('ENGINE'),
@@ -81,7 +86,7 @@ DATABASES = {
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),  # 'ADMIN',
         'HOST': os.getenv('HOST'),          # localhost
-#        'PORT': os.getenv('PORT'),          # '5433',
+#       'PORT': os.getenv('PORT'),          # '5433',
     }
 }
 
@@ -89,23 +94,26 @@ DATABASES = {
 database_url = os.getenv('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(database_url)
 
+LOGIN_URL = '/board/accounts/login'
+LOGIN_REDIRECT_URL = "board:dashboard"
+LOGOUT_REDIRECT_URL = "board:dashboard"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 # PROGRAMACION DE COMO ESTA COMPUESTO UN SISTEMA OPERATIVO Y DE COMO PODRIAMOS RESOLVER

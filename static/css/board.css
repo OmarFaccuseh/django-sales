@@ -1,0 +1,18 @@
+.fondoPrincipal{
+    background-color: green;
+}
+.fondoOscuro{
+    background-color: #143018;
+}
+.fondoTenue{
+    background-color: #66b266;
+}
+.apptitle{
+    height: 100px;
+}
+.appmenu{
+    height: 25px;
+}
+.separator{
+      border-right: 1px solid aqua;
+}

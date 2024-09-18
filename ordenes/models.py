@@ -25,3 +25,8 @@ class Order(models.Model):
     date = models.CharField(max_length=250, default='NA')
     status = models.CharField(max_length=250, default='NA')
     notas = models.CharField(max_length=250, default='NA', db_index=True,)
+
+    def __str__(self):
+        return self.product
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center flex-column m-4">
+    <div class="card m-6 col-6 d-flex align-items-center justify-content-center">
+        <div class="card-body  m-3">
+            <h2>Registro de nuevo usuario</h2>
+
+            <form method="post" class="d-flex flex-column">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" value="Registrarme" class="m-auto btn btn-primary fondoPrincipal" >
+            </form>
+        </div>
+    </div>
+
+    <a href="{% url 'board:login' %}">Regresar</a>
+</div>
+
+{% endblock %}
+
+</body>
+</html>

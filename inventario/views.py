@@ -9,6 +9,8 @@ from django.core import serializers
 #  from .apps import getOrders
 import json
 
+from django.contrib.auth.models import User
+
 
 def product_list(request):
     response = {'productos': Producto.objects.all()}

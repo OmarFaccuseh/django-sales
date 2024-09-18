@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load humanize %}
+<script id="dinamic-script-tabla">
+    function eliminarInstrumento(instrumentoId){
+        if (confirm("¿Estás seguro de que deseas eliminar este instrumento?")) {
+            fetch(`{% url 'board:eliminar_instrumento' 0 %}`.replace('0', instrumentoId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`instrumento-${instrumentoId}`).remove();
+                } else {
+                    alert("No se pudo eliminar el instrumento.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error al eliminar el instrumento.");
+            });
+        }
+    }
+</script>
+
+<div class="mt-4">
+    <div class="d-flex flex-column text-center">
+        <h3 class="mb-1"> Resumen </h3>
+        {% load humanize %}
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="card m-3"><div class="card-body">
+                <h5> Total </h5>
+                <h4> $ {{ metrica.total_inversion_total|floatformat:2|intcomma  }} </h4>
+            </div></div>
+            <div class="card m-3"><div class="card-body">
+                <h5> Gains mensual</h5>
+                <h4> $ {{ metrica.gains_mes_total|floatformat:2|intcomma }} </h4>
+            </div></div>
+            <div class="card  m-3"><div class="card-body">
+                <h5> Gains 365</h5>
+                <h4> $ {{ metrica.gains_anual_total|floatformat:2|intcomma }} </h4>
+            </div></div>
+            <div class="card  m-3"><div class="card-body">
+                <h5> Prom % 365</h5>
+                <h4> $ {{ metrica.prom_porcentaje_anual_total|floatformat:2|intcomma }} </h4>
+            </div></div>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'board:tabla' %}" class="my-3 text-center">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table class="table" >
+            <tr >
+              <th scope="col" >Instrumento</th>
+              <th scope="col" >% Anual</th>
+              <th scope="col" >Congelado dias</th>
+              <th scope="col" >Monto</th>
+              <th scope="col" >Gains mensual</th>
+              <th scope="col" >Gains anual</th>
+              <th scope="col" >Delete</th>
+            </tr>
+
+            {% for form in formset %}
+                {% for hidden in form.hidden_fields %}
+                     {{ hidden }}
+                {% endfor %}
+                <div class="hidden">{{ form.id }}</div>
+                <tr scope="row" id="instrumento-{{ form.instance.id }}">
+                    <td>{{form.name}}</td>
+                    <td>{{form.porcentaje_anual}}</td>
+                    <td>{{form.congelamiento_dias}}</td>
+                    <td>{{form.monto}}</td>
+                    <td>{{form.instance.gains_mes}}</td>
+                    <td>{{form.instance.gains_anual}}</td>
+                    <td><button type="button" class="btn btn-danger" onclick='eliminarInstrumento({{ form.instance.id }})'> X </button></td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        <button type="submit" class="btn fondoPrincipal"> Guardar cambios </button>
+
+    </form >
+
+</div>
+
+{% endblock %}

@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('inventario/', include('inventario.urls', namespace='invetario')),
     path('ordenes/', include('ordenes.urls', namespace='ordenes')),
+    path('board/', include('board.urls', namespace='board')),
     path('api/', include(router.urls)),
 ]
 

@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script id="dinamic-script-metricas-chart" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container d-flex text-center">
+    <div class="d-flex flex-column justify-content-center">
+        <h3>Distribucion</h3>
+        <canvas id="myChart" width="300" height="300" class=""></canvas>
+    </div>
+    <div class="vr" style="width: 2px; margin:5px;"></div> <!-- Separador vertical -->
+    <div class="d-flex flex-column align-items-center justify-content-center text-center w-100">
+        <h3 class="mt-4">Tasas</h3>
+        <canvas id="myChart2" width="500" height="500" class="m-2"></canvas>
+        <hr style="margin:20px; border: 0.5px solid gray; width: 90%;">
+        <h3 class="mt-4">Rendimiento en el tiempo (interes anual compuesto)</h3>
+        <canvas id="myChart3" width="800" height="500" class="m-2"></canvas>
+    </div>
+</div>
+<script id="dinamic-script-metricas">
+    let instrumentosData = {{ data_instrumentos|safe }};
+    let names = instrumentosData.map(i => i.nombre);
+    let montos = instrumentosData.map(i => i.monto );
+    let congelamientos = instrumentosData.map(i => i.congelamiento_dias );
+    let porcs_anuales = instrumentosData.map(i => i.porc_anual );
+    let gains_mensuales = instrumentosData.map(i => i.gains_mes );
+    let gains_anuales = instrumentosData.map(i => i.gains_anual );
+    let backgroundColors = instrumentosData.map(i => i.backgroundColor );
+    let borderColors = instrumentosData.map(i => i.borderColor );
+
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: names,
+            datasets: [{
+                label: 'Monto invertido',
+                data: montos,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+           responsive: false, // Desactiva la respuesta para respetar las dimensiones
+           maintainAspectRatio: false, // Evita mantener la relación de aspecto
+           plugins: {
+              legend: {
+                position: 'top',
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(tooltipItem) {
+                    return '$' + tooltipItem.raw ;
+                  }
+                }
+              }
+           }
+        }
+    });
+
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: names, //no importa
+            datasets: [{
+                label: 'Rendimiento Anual',
+                data: porcs_anuales,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false, // Desactiva la respuesta para respetar las dimensiones
+           maintainAspectRatio: false, // Evita mantener la relación de aspecto
+            plugins: {
+                legend: {
+                    display: false  // Esto oculta la leyenda,
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+    // Acumulacion en 10 anios
+    let montosAcumulados = montos.map((montoInicial, index) => {
+        let montosAnio = [];
+        let montoActual = montoInicial;
+
+        for (let i = 0; i < 20; i++) {
+            montoActual += montoActual * (porcs_anuales[index]/100);
+            montosAnio.push(montoActual.toFixed(2));
+        }
+
+        return montosAnio;
+    });
+
+    // Preparar los datos para el gráfico
+    let datasets = montosAcumulados.map((montosAnio, index) => {
+        return {
+            label: names[index],
+            data: montosAnio,
+            backgroundColor: backgroundColors[index],
+            borderColor: borderColors[index],
+            fill: false,
+            borderWidth: 2
+        };
+    });
+     console.log(datasets)
+
+    let ctx3 = document.getElementById('myChart3').getContext('2d');
+    let myChart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 20}, (_, i) => `Año ${i + 1}`),
+            datasets: datasets
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.dataset.label + ': $' + tooltipItem.raw;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Monto Acumulado ($)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
+
