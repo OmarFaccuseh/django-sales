@@ -11,8 +11,76 @@
     height: 100px;
 }
 .appmenu{
-    height: 25px;
+    height: 30px;
 }
 .separator{
-      border-right: 1px solid aqua;
+    border-right: 1px solid #6eaa5e;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.btn-danger{
+    background: #804e42;
+    color: #cbcbcb;
+    border: none;
+}
+
+body{
+    background-color : #212121;
+}
+
+.fondo-oscuro-c{
+    background-color : #3f3f3f;
+    color: #b4b4b4;
+}
+
+.fondo-oscuro-b{
+    background-color: #2f2f2f;
+}
+
+.texto-claro{
+    color : #9a9a9a;
+}
+
+.text-super-white{
+    color: #cbcbcb;
+}
+
+.text-ultra-white{
+    color: #f2f3f4;
+}
+
+.green-dark{
+    background-color: #404040;
+}
+
+.green-mid {
+    background-color: #007200;
+}
+
+.input_form > input{
+  background-color: transparent;
+  color: #cdd3d9;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #007900; /* Agrega solo la línea inferior */
+}
+
+th, td {
+  border: 2px solid #212121; /* Cambia el grosor y color de los bordes */
+  padding: 8px;           /* Espacio dentro de las celdas */
+}
+
+th{
+   background-color: #353535 !important;
+}
+
+/* quita flechitas para inputs number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }

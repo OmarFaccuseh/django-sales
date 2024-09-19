@@ -29,22 +29,22 @@
 
 <div class="mt-4">
     <div class="d-flex flex-column text-center">
-        <h3 class="mb-1"> Resumen </h3>
+        <h3 class="mb-1 text-super-white"> Resumen </h3>
         {% load humanize %}
         <div class="container d-flex align-items-center justify-content-center">
-            <div class="card m-3"><div class="card-body">
+            <div class="card m-3 fondo-oscuro-c"><div class="card-body">
                 <h5> Total </h5>
                 <h4> $ {{ metrica.total_inversion_total|floatformat:2|intcomma  }} </h4>
             </div></div>
-            <div class="card m-3"><div class="card-body">
+            <div class="card m-3 fondo-oscuro-c"><div class="card-body">
                 <h5> Gains mensual</h5>
                 <h4> $ {{ metrica.gains_mes_total|floatformat:2|intcomma }} </h4>
             </div></div>
-            <div class="card  m-3"><div class="card-body">
+            <div class="card  m-3 fondo-oscuro-c"><div class="card-body">
                 <h5> Gains 365</h5>
                 <h4> $ {{ metrica.gains_anual_total|floatformat:2|intcomma }} </h4>
             </div></div>
-            <div class="card  m-3"><div class="card-body">
+            <div class="card  m-3 fondo-oscuro-c"><div class="card-body">
                 <h5> Prom % 365</h5>
                 <h4> $ {{ metrica.prom_porcentaje_anual_total|floatformat:2|intcomma }} </h4>
             </div></div>
@@ -54,7 +54,7 @@
     <form method="post" action="{% url 'board:tabla' %}" class="my-3 text-center">
         {% csrf_token %}
         {{ formset.management_form }}
-        <table class="table" >
+        <table class="table fondo-oscuro-b texto-claro" >
             <tr >
               <th scope="col" >Instrumento</th>
               <th scope="col" >% Anual</th>
@@ -71,18 +71,18 @@
                 {% endfor %}
                 <div class="hidden">{{ form.id }}</div>
                 <tr scope="row" id="instrumento-{{ form.instance.id }}">
-                    <td>{{form.name}}</td>
-                    <td>{{form.porcentaje_anual}}</td>
-                    <td>{{form.congelamiento_dias}}</td>
-                    <td>{{form.monto}}</td>
-                    <td>{{form.instance.gains_mes}}</td>
-                    <td>{{form.instance.gains_anual}}</td>
-                    <td><button type="button" class="btn btn-danger" onclick='eliminarInstrumento({{ form.instance.id }})'> X </button></td>
+                    <td class="input_form">{{form.name}}</td>
+                    <td class="input_form"> {{form.porcentaje_anual}}</td>
+                    <td class="input_form">{{form.congelamiento_dias}}</td>
+                    <td class="input_form">{{form.monto}}</td>
+                    <td class="input_form">{{form.instance.gains_mes}}</td>
+                    <td class="input_form">{{form.instance.gains_anual}}</td>
+                    <td class="input_form"><button type="button" class="btn btn-danger" onclick='eliminarInstrumento({{ form.instance.id }})'> X </button></td>
                 </tr>
             {% endfor %}
 
         </table>
-        <button type="submit" class="btn fondoPrincipal"> Guardar cambios </button>
+        <button type="submit" class="btn fondoPrincipal text-super-white"> Guardar cambios </button>
 
     </form >
 

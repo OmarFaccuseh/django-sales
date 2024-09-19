@@ -8,17 +8,19 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row fondoPrincipal text-white apptitle">
-            <h1 class="col-9 p-3"> Dashboard </h1>
+    <div class="container fondo-oscuro texto-claro">
+        <div class="green-mid text-white apptitle d-flex align-items-center">
+            <h1 class="m-3 me-1 ms-4 align-self-baseline d-inline-block"> Dashboard </h1>
+            <h6 class="m-3 ms-1 align-self-baseline d-inline-block text-super-white"> your cash balance</h6>
+
         </div>
-        <div class="row fondoOscuro text-white appmenu">
-            <h6 class="col-sm-auto separator"><a href="{% url 'board:config' %}" class="text-info text-decoration-none"> Configuracion </a></h6>
-            <h6 class="col-sm-auto separator"><a href="{% url 'board:tabla' %}" class="text-info text-decoration-none"> Lista </a></h6>
-            <h6 class="col-sm-auto separator"><a href="{% url 'board:graficas' %}" class="text-info text-decoration-none"> Graficas </a></h6>
+        <div class="green-dark appmenu d-flex">
+            <h6 class="col-sm-auto  m-1 mx-2 justfy-content"><a href="{% url 'board:config' %}" class="text-ultra-white text-decoration-none"> Configuracion </a></h6>
+            <h6 class="col-sm-auto  m-1 mx-2 justfy-content"><a href="{% url 'board:tabla' %}" class="text-ultra-white text-decoration-none"> Lista </a></h6>
+            <h6 class="col-sm-auto  m-1 mx-2 justfy-content"><a href="{% url 'board:graficas' %}" class="text-ultra-white text-decoration-none"> Graficas </a></h6>
             {% if user.is_authenticated %}
                 <div class="dropdown col d-flex justify-content-end ">
-                    <h6 class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown"
+                    <h6 class="dropdown-toggle text-ultra-white" id="dropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"> {{ user.username }}! </h6>
 
                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
